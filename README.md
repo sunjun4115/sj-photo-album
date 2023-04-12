@@ -23,3 +23,4 @@ npm run lint
 ### Customize configuration
 See [Configuration Reference](https://cli.vuejs.org/config/).
 # sunjun4115-sj-photo-album
+# sj-photo-album
