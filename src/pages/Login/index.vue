@@ -23,7 +23,7 @@
           <div>
             <el-input
               placeholder="验证码" 
-              v-model="password" 
+              v-model="code" 
               style="width: 90%;"
               >
             </el-input>
@@ -56,13 +56,21 @@
       data(){
         return {
           userName:'',
-          password:''
+          password:'',
+          code:'',
         }
       },
       methods:{
         //点击登录
         toCarousel(){
-          this.$router.push({name:"Carousel"})
+          let userName = this.userName;
+          let password = this.password;
+          if(userName == "sunjun" && password=="123456"){
+            this.$router.push({name:"Carousel"})
+          }else{
+            this.$alert('用户名或密码有误', '提示');
+          }
+          
         },
       }
     }
