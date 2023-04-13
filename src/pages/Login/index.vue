@@ -43,7 +43,6 @@
           <li>联系客服</li>
           <li>商家入驻</li>
           <li>营销中心</li>
-          <li>销售联盟</li>
         </ul>
         <div class="address">地址：上海市浦东新区</div>
         <div class="beian">© 2023 c3VuanVuCiA=</div>
