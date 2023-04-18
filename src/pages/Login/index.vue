@@ -60,11 +60,17 @@
           code:'',
         }
       },
+      mounted(){
+        console.log(this)
+      },
       methods:{
         //点击登录
         toCarousel(){
           let userName = this.userName;
           let password = this.password;
+          console.log("this.$store",this.$store)
+          this.$store.dispatch("jia",password)
+          return false
           if(userName == "sunjun" && password=="123456"){
             this.$router.push({name:"Carousel"})
           }else{
