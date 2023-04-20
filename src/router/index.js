@@ -34,7 +34,7 @@ const routes = [{
         component: CloudServer
     },
     {
-        path: '/Login',
+        path: '/Login/:id/:title',
         name: 'Login',
         component: Login
     },

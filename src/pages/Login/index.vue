@@ -41,8 +41,8 @@
           <li>关于我们</li>
           <li>联系我们</li>
           <li>联系客服</li>
-          <li>商家入驻</li>
-          <li>营销中心</li>
+          <li>商家入驻{{$store.state.sum}}</li>
+          <li>营销中心{{sum}}</li>
         </ul>
         <div class="address">地址：上海市浦东新区</div>
         <div class="beian">© 2023 c3VuanVuCiA=</div>
@@ -51,8 +51,10 @@
   </template>
   
   <script>
+    import { mapState, mapActions} from 'vuex';
     export default {
       name: 'Login',
+      props:["id","title"],
       data(){
         return {
           userName:'',
@@ -69,7 +71,9 @@
           let userName = this.userName;
           let password = this.password;
           console.log("this.$store",this.$store)
-          this.$store.dispatch("jia",password)
+          //this.$store.dispatch("jia",1)
+          //s使用mapActions写法，调用或者添加点击事件，传对应的参数
+          this.increment(1);
           return false
           if(userName == "sunjun" && password=="123456"){
             this.$router.push({name:"Carousel"})
@@ -78,6 +82,15 @@
           }
           
         },
+        //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)
+        ...mapActions({increment:'jia'})
+      },
+      computed:{
+        //借助mapState生成计算属性，从state中读取数据。（对象写法）
+			  // ...mapState({he:'sum'}),
+
+			  //借助mapState生成计算属性，从state中读取数据。（数组写法）
+        ...mapState(['sum'])
       }
     }
   </script>
