@@ -63,7 +63,7 @@
         }
       },
       mounted(){
-        console.log(this)
+        console.log(this);
       },
       methods:{
         //点击登录
@@ -74,12 +74,13 @@
           //this.$store.dispatch("jia",1)
           //s使用mapActions写法，调用或者添加点击事件，传对应的参数
           this.increment(1);
-          return false
-          if(userName == "sunjun" && password=="123456"){
-            this.$router.push({name:"Carousel"})
-          }else{
-            this.$alert('用户名或密码有误', '提示');
-          }
+          // return false
+          // if(userName == "sunjun" && password=="123456"){
+          //   this.$router.push({name:"Carousel"})
+          // }else{
+          //   this.$alert('用户名或密码有误', '提示');
+          // }
+          this.$router.push({name:"Carousel"})
           
         },
         //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)

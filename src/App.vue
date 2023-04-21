@@ -1,18 +1,19 @@
 <template>
   <div id="app">
-    <Top v-show="$route.path != '/Login' && $route.path != '/'"></Top>
-    <router-view></router-view>
+    <Main></Main>
+    <!-- <Main v-show="$route.path != '/Login' && $route.path != '/'"></Main> -->
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
 <script>
 // import HelloWorld from './components/HelloWorld.vue'
-import Top from './components/Top.vue'
+import Main from './components/Main.vue'
 
 export default {
   name: 'App',
   components: {
-    Top
+    Main
   },
   mounted() {
     console.log("$route.path",this.$route.path);

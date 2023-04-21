@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+  <el-menu  v-show="$route.path != '/Login' && $route.path != '/'" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1" @click="toCarousel">首页</el-menu-item>
   <!-- <el-submenu index="2">
     <template slot="title">我的工作台</template>
@@ -15,11 +15,12 @@
     </el-submenu>
   </el-submenu> -->
   <el-menu-item index="2" @click="toCloudServer">云服务</el-menu-item>
-  <el-menu-item index="3">运维管理</el-menu-item>
+  <el-menu-item index="3" @click="toMessage">运维管理</el-menu-item>
   <el-menu-item index="4" @click="toSeePhoto">图片</el-menu-item>
   <el-menu-item index="5">关于</el-menu-item>
 </el-menu>
 <div class="line"></div>
+<router-view></router-view>
 </div>
    
 </template>
@@ -30,6 +31,9 @@ export default {
         return {
             activeIndex: '1',
         }
+    },
+    mounted(){
+      console.log("sss",this)
     },
      methods: {
       handleSelect(key, keyPath) {
@@ -43,6 +47,9 @@ export default {
       },
       toCloudServer(){
         this.$router.push({name:"CloudServer"})
+      },
+      toMessage(){
+        this.$router.push({name:"Message"})
       },
     }
 }
