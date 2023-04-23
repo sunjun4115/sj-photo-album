@@ -1,12 +1,7 @@
 <template>
     <div style="display:flex;">
-        <div style="width:20%;border: 1px solid red;box-sizing: border-box;">
-            <!-- <el-switch
-            v-model="isCollapse"
-            active-text="打开"
-            inactive-text="关闭">
-            </el-switch> -->
-            <el-menu
+        <div style="width:20%; border: 1px solid #ddd;">
+            <!-- <el-menu
             default-active="2"
             class="el-menu-vertical-demo"
             @open="handleOpen"
@@ -42,7 +37,8 @@
                 <i class="el-icon-setting"></i>
                 <span slot="title">导航四</span>
             </el-menu-item>
-            </el-menu>
+            </el-menu> -->
+            <el-tree :data="data" :props="defaultProps" @node-click="handleNodeClick"></el-tree>
         </div>
          <div style="width:2%;">
             <el-image
@@ -52,8 +48,8 @@
                 @click="changeModel">
             </el-image>
         </div>
-        <div style="width:78%;border: 1px solid green;box-sizing: border-box;">
-            
+        <div style="width:78%; border: 2px dashed #ddd;">
+            {{rightText}}
         </div>
     </div>
 </template>
@@ -66,7 +62,47 @@ export default {
         return {
             isCollapse:false,
             fits: ['fill', 'contain', 'cover', 'none', 'scale-down'],
-            srcImg:menuClose
+            srcImg:menuClose,
+            data: [{
+            label: '一级 1',
+                children: [{
+                    label: '二级 1-1',
+                    children: [{
+                    label: '三级 1-1-1'
+                    }]
+                }]
+                }, {
+                label: '一级 2',
+                children: [{
+                    label: '二级 2-1',
+                    children: [{
+                    label: '三级 2-1-1'
+                    }]
+                }, {
+                    label: '二级 2-2',
+                    children: [{
+                    label: '三级 2-2-1'
+                    }]
+                }]
+                }, {
+                label: '一级 3',
+                children: [{
+                    label: '二级 3-1',
+                    children: [{
+                    label: '三级 3-1-1'
+                    }]
+                }, {
+                    label: '二级 3-2',
+                    children: [{
+                    label: '三级 3-2-1'
+                    }]
+                }]
+            }],
+            defaultProps: {
+                children: 'children',
+                label: 'label',
+            },
+            rightText:""
         }
     },
     methods: {
@@ -85,6 +121,10 @@ export default {
             this.srcImg = menuOpen;
             this.isCollapse = true;
         }
+      },
+      handleNodeClick(data) {
+        console.log(data);
+        this.rightText = data.label
       }
     },
 }

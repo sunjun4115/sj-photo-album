@@ -96,6 +96,21 @@ const originReplace = VueRouter.prototype.replace;
 VueRouter.prototype.replace = function replace(location) {
     return originReplace.call(this, location).catch(() => {})
 }
+
+// //全局前置守卫：初始化时执行、每次路由切换前执行
+// router.beforeEach((to, from, next) => {
+//     console.log('beforeEach', to, from)
+//     if (to.meta.isAuth) { //判断当前路由是否需要进行权限控制
+//         if (localStorage.getItem('school') === 'atguigu') { //权限控制的具体规则
+//             next() //放行
+//         } else {
+//             alert('暂无权限查看')
+//                 // next({name:'guanyu'})
+//         }
+//     } else {
+//         next() //放行
+//     }
+// })
 export default new VueRouter({
     mode: 'hash',
     // mode: 'history',

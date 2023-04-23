@@ -6,7 +6,8 @@ import { Notification } from 'element-ui'
 
 console.log("process.env", process.env);
 const service = axios.create({
-    baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : 'oamapi/', // api 的 base_url //如果配置了环境变量就可以直接写/api,
+    //baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : 'oamapi/', // api 的 base_url //如果配置了环境变量就可以直接写/api,
+    baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // api 的 base_url //如果配置了环境变量就可以直接写/api,
     //baseURL: "oamapi/", //如果配置了环境变量就可以直接写/api,
     //跨域请求是否提供凭据信息(cookie、HTTP认证及客户端SSL证明等),也可以简单的理解为，当前请求为跨域类型时是否在请求中协带cookie。
     //默认值为false。在获取同域资源时设置 withCredentials 没有影响。 true：在跨域请求时，会携带用户凭证  false：在跨域请求时，不会携带用户凭证；返回的 response 里也会忽略 cookie
