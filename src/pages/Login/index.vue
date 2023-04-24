@@ -84,17 +84,27 @@
           console.log("this.code",this.code)
           console.log("this.true_code",this.true_code);
           let loginObj = {};
-          loginObj.userName = userName;
-          loginObj.passWord = passWord;
+          loginObj.username = userName;
+          loginObj.password = passWord;
           loginObj.code = this.code;
-          loginApi.getLogin(loginObj)
-          return false
+          loginApi.getLogin(loginObj).then(res=>{
+            console.log("res",res);
+            if(res.code === 0){
+              let userToken = res.data.token;
+              localStorage.setItem("sjToken",userToken);
+              this.$router.push({name:"carousel"});
+            }else{
+              this.$alert('登录失败', '提示');
+            }
+           
+          }).catch(err=>console.log("err",err))
+          // return false
           // if(userName == "sunjun" && password=="123456"){
-          //   this.$router.push({name:"Carousel"})
+          //   this.$router.push({name:"carousel"})
           // }else{
           //   this.$alert('用户名或密码有误', '提示');
           // }
-          this.$router.push({name:"Carousel"})
+          
           
         },
         //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)

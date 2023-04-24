@@ -13,37 +13,37 @@ import New from "../pages/New"
 
 const routes = [{
         path: '/',
-        name: 'Login',
+        name: 'login',
         component: Login
     },
     {
-        path: '/Carousel',
-        name: 'Carousel',
+        path: '/carousel',
+        name: 'carousel',
         component: Carousel
     },
     {
-        path: '/Carousel/:id',
-        name: 'Carousel',
+        path: '/carousel/:id',
+        name: 'carousel',
         component: Carousel
     },
     {
-        path: '/SeePhoto',
-        name: 'SeePhoto',
+        path: '/seePhoto',
+        name: 'seePhoto',
         component: SeePhoto
     },
     {
-        path: '/CloudServer',
-        name: 'CloudServer',
+        path: '/cloudServer',
+        name: 'cloudServer',
         component: CloudServer
     },
     {
-        path: '/Message',
-        name: 'Message',
+        path: '/message',
+        name: 'message',
         component: Message,
         children: [{
-            path: "Detail/:id/:title", //方式为params时，路径必须要这样写
+            path: "detail/:id/:title", //方式为params时，路径必须要这样写
             // path: "Detail",
-            name: "Detail",
+            name: "detail",
             component: Detail,
             //props的第一种写法，值为对象，该对象中的所有key-value都会以props的形式传给Detail组件。
             // props: { a: 1, b: 'hello' }
@@ -61,7 +61,7 @@ const routes = [{
                 }
             }
         }, {
-            path: "New",
+            path: "new",
             name: "xinwen",
             component: New,
             //props的第三种写法，值为函数,以props的形式传给Detail组件
@@ -76,14 +76,14 @@ const routes = [{
         }]
     },
     {
-        path: '/Login/:id/:title',
-        name: 'Login',
+        path: '/login',
+        name: 'login',
         component: Login
     },
-    {
-        path: '*',
-        redirect: '/'
-    },
+    // {
+    //     path: '*',
+    //     redirect: '/'
+    // },
 ]
 
 //重写push方法
@@ -111,9 +111,35 @@ VueRouter.prototype.replace = function replace(location) {
 //         next() //放行
 //     }
 // })
-export default new VueRouter({
+const router = new VueRouter({
     mode: 'hash',
     // mode: 'history',
     // base: '/oamweb/',
     routes: routes
 })
+
+//全局前置路由守卫————初始化的时候被调用、每次路由切换之前被调用
+router.beforeEach((to, from, next) => {
+    console.log('前置路由守卫', to, from)
+    if (localStorage.getItem("sjToken")) { //判断是否有token
+        // next()
+        if (to.path == '/login') {
+            // 这个 if 里面什么时候会进来，比如说某个人他现在操作页面正常，token 存在或者没过期，但是他喵的，贱嗖的，他现在就要重新登录，你管我，然后就进到这里面来了
+            next('/carousel');
+            // token 存在或者没过期，即将要进入的不是 login 页面
+        } else {
+            // 这个 else 里面什么时候会进来，比如说，当前 token 存在或者没过期，我随便进入到任何一个页面，都可以进来
+            next();
+        }
+    } else {
+        // 这个 if 里面什么时候会进来，这里就是正常进来，比如说，当前 token 不存在或者过期了，我直接点击 进入登录页
+        if (to.path == "/login") {
+            next()
+        } else {
+            // 这个 else 里面什么时候会进来，比如说，A 到 B，那么在进入 B 之前执行 router.beforeEach 前置守卫的时候，token 不存在或者过期了，你就要进入到 C 页面，也就是 login登录页
+            next(`/login`) // 否则全部重定向到登录页
+        }
+
+    }
+})
+export default router

@@ -7,12 +7,12 @@ import { Notification } from 'element-ui'
 console.log("process.env", process.env);
 const service = axios.create({
     //baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : 'oamapi/', // api 的 base_url //如果配置了环境变量就可以直接写/api,
-    baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/', // api 的 base_url //如果配置了环境变量就可以直接写/api,
+    baseURL: process.env.NODE_ENV === 'production' ? process.env.VUE_APP_BASE_API : '/api', // api 的 base_url //如果配置了环境变量就可以直接写/api,
     //baseURL: "oamapi/", //如果配置了环境变量就可以直接写/api,
     //跨域请求是否提供凭据信息(cookie、HTTP认证及客户端SSL证明等),也可以简单的理解为，当前请求为跨域类型时是否在请求中协带cookie。
     //默认值为false。在获取同域资源时设置 withCredentials 没有影响。 true：在跨域请求时，会携带用户凭证  false：在跨域请求时，不会携带用户凭证；返回的 response 里也会忽略 cookie
     withCredentials: false,
-    timeout: 3000, //请求超时
+    timeout: 30000, //请求超时
     // headers是被发送的自定义请求头，请求头内容需要根据后端要求去设置，这里我们使用本项目请求头。
     // headers: {
     //     'Accept': 'application/json',
@@ -34,7 +34,11 @@ service.interceptors.request.use(config => {
     //     title: 'loading...',
     //     duration: 5000
     // })
-    const token = "Bearer eyJhbGciOiJIUzUxMiJ9.eyJqdGkiOiJkM2I3ZjIzOGUxODM0NjkyYjk2ZDc3YmMxZjc4NzZjYyIsInVzZXIiOiJhZG1pbiIsInN1YiI6ImFkbWluIn0.s7_YKKVIY8pJ0uclfBIwQbiH7e8kUWlwVEEziiXMmHJV96MDrdhWU3EVEJkqHFXZ_SLCYseF2q9rs2nAUfwj1g";
+
+    const token = "";
+    if (localStorage.getItem("sjToke")) {
+        token = localStorage.getItem("sjToke")
+    }
     //const locale = Vue.ls.get(LANG)
     if (token) {
         // 添加token请求头
@@ -77,7 +81,8 @@ service.interceptors.response.use(response => {
         }
         return Promise.reject(res || 'error')
     } else {
-        return res.data
+        //return res.data
+        return res
     }
 
 }, err => {

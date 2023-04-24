@@ -40,16 +40,16 @@ export default {
         console.log(key, keyPath);
       },
       toSeePhoto(){
-        this.$router.push({name:"SeePhoto"})
+        this.$router.push({name:"seePhoto"})
       },
       toCarousel(){
-        this.$router.push({name:"Carousel",params:{userId:"abc",passWorld:123}})
+        this.$router.push({name:"carousel",params:{userId:"abc",passWorld:123}})
       },
       toCloudServer(){
-        this.$router.push({name:"CloudServer"})
+        this.$router.push({name:"cloudServer"})
       },
       toMessage(){
-        this.$router.push({name:"Message"})
+        this.$router.push({name:"message"})
       },
     }
 }

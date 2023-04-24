@@ -8,7 +8,7 @@
 				<!-- <router-link :to="`/Message/Detail/${m.id}/${m.title}`">{{m.title}}</router-link>&nbsp;&nbsp; -->
                 <!-- 跳转路由并携带params参数，to的对象写法 -->
                 <router-link :to="{
-                    name:'Detail',
+                    name:'detail',
                     params:{
                         id:m.id,
                         title:m.title
@@ -26,7 +26,7 @@
             </router-link> -->
             <!-- 跳转路由并携带query参数，to的对象写法 -->
             <router-link :to="{
-                path:'/Message/New',
+                path:'/message/new',
                 query:{
                     id:n.id,
                     title:n.title
