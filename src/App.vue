@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Main></Main>
-    <!-- <Main v-show="$route.path != '/Login' && $route.path != '/'"></Main> -->
+    <!-- <Main v-show="$route.path != '/login' && $route.path != '/'"></Main> -->
     <!-- <router-view></router-view> -->
   </div>
 </template>

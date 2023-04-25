@@ -1,9 +1,8 @@
 <template>
     <div class="login-container">
       <!-- 登录 -->
-      <div class="login-wrap">
-       <div class="login-box">
-        
+      <div class="login-wrap" style="position: relative;">
+       <div class="login-box" ref="loginBox" id="loginBox">
         <div class="login-input" style="margin-top: 40px;">
           <el-input
             placeholder="请输用户名"
@@ -35,7 +34,11 @@
         <div class="login-btn">
           <el-button style="width: 98%;" type="primary" @click="toCarousel" round>登录</el-button>
         </div>
+        <div class="register-btn">
+          <el-button style="width: 98%;margin-top: 5px;" type="primary" @click="goRegister" round>注册</el-button>
+        </div>
        </div>
+       <Register></Register>
       </div>
       <!-- 底部 -->
       <div class="copyright">
@@ -49,10 +52,24 @@
         <div class="address">地址：上海市浦东新区</div>
         <div class="beian">© 2023 c3VuanVuCiA=</div>
       </div>
+      <!-- 注册弹框 -->
+      <el-dialog
+        title="注册"
+        :visible.sync="register.dialogRegister"
+        width="30%"
+        :before-close="handleClose">
+        <span>这是一段信息</span>
+        <span slot="footer" class="dialog-footer">
+          <el-button @click="register.dialogRegister = false">取 消</el-button>
+          <el-button type="primary" @click="goRegister.dialogRegister = false">确 定</el-button>
+        </span>
+      </el-dialog>
     </div>
   </template>
   
   <script>
+    import draw from "../../utils/verificationcode.js"
+    import Register from "../../components/register/index.vue"
     import { mapState, mapActions} from 'vuex';
     import loginApi from "../../api/login.js"
     export default {
@@ -64,13 +81,18 @@
           password:'',
           code:'',
           true_code:'',
-          yanzheng_arr:[]
-
+          yanzheng_arr:[],
+          register:{
+            dialogRegister:false
+          }
         }
       },
       mounted(){
         console.log(this);
-        this.draw(this.yanzheng_arr);
+        this.true_code = draw("canvas",this.yanzheng_arr);
+      },
+      components:{
+        Register
       },
       methods:{
         //点击登录
@@ -107,85 +129,33 @@
           
           
         },
-        //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)
-        ...mapActions({increment:'jia'}),
-        //生成图片验证码
-        draw(show_num) {
-            var canvas_width =  document.querySelector("#canvas").clientWidth;
-            var canvas_height = document.querySelector("#canvas").clientHeight;
-            var canvas = document.getElementById("canvas"); //获取到canvas
-            var context = canvas.getContext("2d"); //获取到canvas画图
-            canvas.width = canvas_width;
-            canvas.height = canvas_height;
-            var sCode = "a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,E,F,G,H,J,K,L,M,N,P,Q,R,S,T,W,X,Y,Z,1,2,3,4,5,6,7,8,9,0";
-            var aCode = sCode.split(",");
-            var aLength = aCode.length; //获取到数组的长度
-        
-            //4个验证码数
-            for (var i = 0; i <= 3; i++) {
-                var j = Math.floor(Math.random() * aLength); //获取到随机的索引值
-                var deg = (Math.random() * 30 * Math.PI) / 180; //产生0~30之间的随机弧度
-                var txt = aCode[j]; //得到随机的一个内容
-                show_num[i] = txt.toLowerCase();// 依次把取得的内容放到数组里面
-                var x = 10 + i * 20; //文字在canvas上的x坐标
-                var y = 20 + Math.random() * 8; //文字在canvas上的y坐标
-                context.font = "bold 23px 微软雅黑";
-        
-                context.translate(x, y);
-                context.rotate(deg);
-        
-                context.fillStyle = this.randomColor();
-                context.fillText(txt, 0, 0);
-        
-                context.rotate(-deg);
-                context.translate(-x, -y);
-            }
-            //验证码上显示6条线条
-            for (var i = 0; i <= 5; i++) {
-                context.strokeStyle = this.randomColor();
-                context.beginPath();
-                context.moveTo(
-                    Math.random() * canvas_width,
-                    Math.random() * canvas_height
-                );
-                context.lineTo(
-                    Math.random() * canvas_width,
-                    Math.random() * canvas_height
-                );
-                context.stroke();
-              }
-              //验证码上显示31个小点
-              for (var i = 0; i <= 30; i++) {
-                  context.strokeStyle = this.randomColor();
-                  context.beginPath();
-                  var x = Math.random() * canvas_width;
-                  var y = Math.random() * canvas_height;
-                  context.moveTo(x, y);
-                  context.lineTo(x + 1, y + 1);
-                  context.stroke();
-              }
-        
-              //最后把取得的验证码数组存起来，方式不唯一
-              var num = show_num.join("");
-              // console.log(num);
-              this.true_code = num
+        handleClose(done) {
+          this.$confirm('确认关闭？')
+            .then(_ => {
+              done();
+            })
+            .catch(_ => {});
         },
-        //得到随机的颜色值
-        randomColor() {
-            var r = Math.floor(Math.random() * 256);
-            var g = Math.floor(Math.random() * 256);
-            var b = Math.floor(Math.random() * 256);
-            return "rgb(" + r + "," + g + "," + b + ")";
+        goRegister(){
+          // console.log(this.$refs.loginBox);
+          // console.log(document.querySelector("#registerBox"));
+          this.$refs.loginBox.setAttribute("style","transform:rotateY(-180deg)")
+          let regDiv = document.querySelector("#registerBox")
+          regDiv.setAttribute("style","transform:rotateY(-360deg)");
+          // console.log(this.true_code);
+          // console.log("end")
         },
         //canvas点击刷新
         handleCanvas(){
-            this.draw(this.yanzheng_arr);
-        }
+          this.true_code = draw("canvas",this.yanzheng_arr);
+        },
+        //借助mapActions生成对应的方法，方法中会调用dispatch去联系actions(对象写法)
+        ...mapActions({increment:'jia'}),
+       
       },
       computed:{
         //借助mapState生成计算属性，从state中读取数据。（对象写法）
 			  // ...mapState({he:'sum'}),
-
 			  //借助mapState生成计算属性，从state中读取数据。（数组写法）
         ...mapState(['sum'])
       }
@@ -202,19 +172,23 @@
         width: 96%;
         margin-left: 2%;
         margin-top: 5%;
-        height: 480px;
+        height: 500px;
         background: #409EFF;
         overflow: hidden;
       }
       .login-box{
         width: 380px;
-        height: 360px;
+        height: 400px;
         margin-top: 3%;
-        margin-left: 60%;
+        margin-left: 65%;
         box-sizing: border-box;
         background: #fff;
         border: 1px solid #fff;
         border-radius: 5px;
+        position: absolute;
+        perspective: 1000px;
+        transition: 0.5s ease-in-out;
+
       }
       .login-input{
         margin-top: 25px;
@@ -228,7 +202,12 @@
         justify-content: space-around;
       }
       .login-btn{
-        margin-top: 60px;
+        margin-top: 50px;
+        width: 90%;
+        margin-left: 5%;
+      }
+      .register-btn{
+        margin-top: 20px;
         width: 90%;
         margin-left: 5%;
       }

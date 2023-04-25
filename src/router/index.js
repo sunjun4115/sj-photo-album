@@ -6,7 +6,7 @@ Vue.use(VueRouter)
 import Carousel from "../pages/carousel"
 import SeePhoto from "../pages/seephoto"
 import CloudServer from "../pages/cloudserver"
-import Login from "../pages/Login/index"
+import Login from "../pages/login/index"
 import Message from "../pages/Message"
 import Detail from "../pages/Detail"
 import New from "../pages/New"
