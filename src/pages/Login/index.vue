@@ -52,18 +52,6 @@
         <div class="address">地址：上海市浦东新区</div>
         <div class="beian">© 2023 c3VuanVuCiA=</div>
       </div>
-      <!-- 注册弹框 -->
-      <el-dialog
-        title="注册"
-        :visible.sync="register.dialogRegister"
-        width="30%"
-        :before-close="handleClose">
-        <span>这是一段信息</span>
-        <span slot="footer" class="dialog-footer">
-          <el-button @click="register.dialogRegister = false">取 消</el-button>
-          <el-button type="primary" @click="goRegister.dialogRegister = false">确 定</el-button>
-        </span>
-      </el-dialog>
     </div>
   </template>
   
@@ -82,9 +70,6 @@
           code:'',
           true_code:'',
           yanzheng_arr:[],
-          register:{
-            dialogRegister:false
-          }
         }
       },
       mounted(){
@@ -128,13 +113,6 @@
           // }
           
           
-        },
-        handleClose(done) {
-          this.$confirm('确认关闭？')
-            .then(_ => {
-              done();
-            })
-            .catch(_ => {});
         },
         goRegister(){
           // console.log(this.$refs.loginBox);
