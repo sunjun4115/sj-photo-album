@@ -46,8 +46,8 @@
           <li>关于我们</li>
           <li>联系我们</li>
           <li>联系客服</li>
-          <li>商家入驻{{$store.state.sum}}</li>
-          <li>营销中心{{sum}}</li>
+          <li>商家入驻</li>
+          <li>营销中心</li>
         </ul>
         <div class="address">地址：上海市浦东新区</div>
         <div class="beian">© 2023 c3VuanVuCiA=</div>
@@ -73,8 +73,9 @@
         }
       },
       mounted(){
-        console.log(this);
         this.true_code = draw("canvas",this.yanzheng_arr);
+        //登录进去后默认选中第一个菜单
+        sessionStorage.setItem("nowSelect","1");
       },
       components:{
         Register
@@ -99,6 +100,12 @@
             if(res.code === 0){
               let userToken = res.data.token;
               localStorage.setItem("sjToken",userToken);
+              let userInfoObj = {};
+              userInfoObj.userName = res.data.user.username;
+              userInfoObj.userAvatar = res.data.user.userAvatar;
+              userInfoObj.userId = res.data.user.id;
+              this.$store.dispatch("getUserInfo",userInfoObj)
+              sessionStorage.setItem("nowSelect","1");
               this.$router.push({name:"carousel"});
             }else{
               this.$alert('登录失败', '提示');

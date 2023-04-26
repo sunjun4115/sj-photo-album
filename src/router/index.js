@@ -10,6 +10,7 @@ import Login from "../pages/login/index"
 import Message from "../pages/Message"
 import Detail from "../pages/Detail"
 import New from "../pages/New"
+import UserInfo from "../pages/userInfo/index"
 
 const routes = [{
         path: '/',
@@ -35,6 +36,12 @@ const routes = [{
         path: '/cloudServer',
         name: 'cloudServer',
         component: CloudServer
+    },
+    {
+        path: '/userInfo/:userId',
+        name: 'userInfo',
+        component: UserInfo,
+        props: true
     },
     {
         path: '/message',
