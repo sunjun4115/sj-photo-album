@@ -1,6 +1,6 @@
 <template>
 <div>
-  <el-menu  v-show="$route.path != '/Login' && $route.path != '/'" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
+  <el-menu  v-if="$route.path != '/Login' && $route.path != '/'" :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <el-menu-item index="1" @click="toCarousel">首页</el-menu-item>
   <el-menu-item index="2" @click="toCloudServer">云服务</el-menu-item>
   <el-menu-item index="3" @click="toMessage">运维管理</el-menu-item>
@@ -28,7 +28,7 @@ export default {
     name:"Top",
     data() {
         return {
-            activeIndex: '1',
+            activeIndex: sessionStorage.getItem("nowSelect") ? sessionStorage.getItem("nowSelect") :'1',
         }
     },
     mounted(){
@@ -61,9 +61,16 @@ export default {
       },
       handleCommand(command) {
         console.log("xxxxxxxx",this.$store.state);
-        this.activeIndex="6";
-        sessionStorage.setItem("nowSelect","6");
-        this.$router.push({name:"userInfo",params:{userId:this.$store.state.userInfo.userId}})
+        if(command == "userCenter"){
+          this.activeIndex="6";
+          sessionStorage.setItem("nowSelect","6");
+          this.$router.push({name:"userInfo",params:{userId:this.$store.state.userInfo.userId}})
+        }else if(command == "logout"){
+          sessionStorage.setItem("nowSelect","1");
+          this.$router.push({name:"login"})
+        }else{
+          console.log("there is no match");
+        }
         console.log("command",command)
       }
     }

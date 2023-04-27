@@ -102,6 +102,9 @@
               localStorage.setItem("sjToken",userToken);
               let userInfoObj = {};
               userInfoObj.userName = res.data.user.username;
+              userInfoObj.gender = res.data.user.gender;
+              userInfoObj.phone = res.data.user.phone;
+              userInfoObj.realName = res.data.user.realName;
               userInfoObj.userAvatar = res.data.user.userAvatar;
               userInfoObj.userId = res.data.user.id;
               this.$store.dispatch("getUserInfo",userInfoObj)

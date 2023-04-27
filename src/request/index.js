@@ -34,16 +34,23 @@ service.interceptors.request.use(config => {
     //     title: 'loading...',
     //     duration: 5000
     // })
+    console.log("tokentokentokentokentokentokentoken11111", localStorage.getItem("sjToken"));
+    console.log("tokentokentokentokentokentokentoken11111", typeof localStorage.getItem("sjToken"));
 
-    const token = "";
-    if (localStorage.getItem("sjToke")) {
-        token = localStorage.getItem("sjToke")
+    // let token = "";
+
+    if (localStorage.getItem("sjToke") != null || localStorage.getItem("sjToke") != "" || localStorage.getItem("sjToke") != undefined) {
+        // token = localStorage.getItem("sjToke");
+        console.log('set token', config)
+            // 添加token请求头
+        config.headers.token = localStorage.getItem("sjToken");
     }
     //const locale = Vue.ls.get(LANG)
-    if (token) {
-        // 添加token请求头
-        config.headers.Authorization = token
-    }
+    // if (token) {
+    //     console.log("tokentokentokentokentokentokentoken");
+    //     // 添加token请求头
+    //     config.headers.Authorization = token
+    // }
 
     //最后的话一定要给他return出去 不return不执行
     return config

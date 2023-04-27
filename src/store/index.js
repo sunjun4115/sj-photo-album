@@ -28,6 +28,9 @@ const mutations = {
         console.log("state", state);
         state.userInfo.userId = value.userId;
         state.userInfo.userName = value.userName;
+        state.userInfo.realName = value.realName;
+        state.userInfo.gender = value.gender;
+        state.userInfo.phone = value.phone;
         state.userInfo.userAvatar = value.userAvatar;
     }
 };
@@ -37,6 +40,9 @@ const state = {
     userInfo: {
         userId: "",
         userName: "",
+        realName: "",
+        gender: "",
+        phone: "",
         userAvatar: "",
     }
 };
