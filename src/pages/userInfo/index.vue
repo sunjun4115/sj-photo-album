@@ -100,6 +100,9 @@
                 url:"http://192.168.14.24:8088/auth/uploadPicture/",
                 defaultAvatar:"",
                 avatar:"",
+                // headers:{
+                //     token:localStorage.getItem("sjToken") ? localStorage.getItem("sjToken") : "112"
+                // },
                 modifyDialog:false,
                 userInfo:{
                     userName:"",

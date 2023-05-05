@@ -20,7 +20,16 @@ export function addPushClientTag(data) {
     })
 }
 
-export default { getHome, addPushClientTag }
+//获取center部分
+export function getCenterList() {
+    return request({
+        url: 'api/index/findFlowerByType',
+        method: 'get',
+    })
+}
+
+
+export default { getHome, addPushClientTag, getCenterList }
 
 //比如说以后我们要维护封装好的接口 这样封装好后我们就不需要去组件里一个一个去找，直接来这个文件修改即可
 //组件化开模块化发或者开发 它们都有一个原则

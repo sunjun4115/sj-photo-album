@@ -1,29 +1,75 @@
 <template>
 <div>
-   <el-carousel :interval="4000" type="card" height="200px">
-    <el-carousel-item v-for="item in 6" :key="item">
-      <h3 class="medium">{{ item }}</h3>
+   <el-carousel :interval="4000" type="card" height="300px">
+    <el-carousel-item v-for="item in items" :key="item.id">
+      <img :src="item.url" style="width: 100%;height: 300px; object-fit: cover;"  alt="">
     </el-carousel-item>
   </el-carousel>
-  <p>{{this.$route.params.userId}}</p>
-  <el-button type="primary" @click="testBtn">click</el-button>
+  <!-- <p>{{this.$route.params.userId}}</p>
+  <el-button type="primary" @click="testBtn">click</el-button> -->
+  <Centerlist :centerList="centerList"></Centerlist>
 </div>
  
   
 </template>
 <script>
+import { nanoid } from 'nanoid' 
 import carouselApi from "../api/carousel.js"
+import Centerlist from "../components/centerList/index.vue"
 export default {
     
     name:"Carousel",
     data() {
         return {
-            
+          items:[
+            {id:nanoid(),url:"../../f1.jpg"},
+            {id:nanoid(),url:"../../f2.jpg"},
+            {id:nanoid(),url:"../../f3.jpg"},
+            {id:nanoid(),url:"../../f4.jpg"},
+          ],
+          centerList:[
+            {
+              id:nanoid(),
+              title:"abc",
+              imgurl:[
+                {
+                  id:nanoid(),
+                  desc:"冰清玉洁",
+                  price:10,
+                  url:"../../c1.png"
+                },
+                {
+                  id:nanoid(),
+                  desc:"浪漫心情",
+                  price:20,
+                  url:"../../c1.png"
+                },
+                {
+                  id:nanoid(),
+                  desc:"愿得一人心",
+                  price:30,
+                  url:"../../c1.png"
+                },
+                {
+                  id:nanoid(),
+                  desc:"花香四季",
+                  price:40,
+                  url:"../../c1.png"
+                }
+              ]
+            },
+          ]
         }
     },
+    components:{
+      Centerlist
+    },
     mounted() {
-      console.log(this.$route.params.userId);
-      console.log(this.$route.params.passWorld);
+      // console.log(this.$route.params.userId);
+      // console.log(this.$route.params.passWorld);
+      carouselApi.getCenterList().then(res=>{
+        console.log('center',res)
+      }).catch(err=>console.log("center",err))
     },
     methods: {
       testBtn(){
